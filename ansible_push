@@ -1,0 +1,605 @@
+---
+- hosts: proxy
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - name: changing the ownership permissions on the proxy node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inven
+tory_hostname }} tail -5 /var/log/logstash-stdout.log
+      register: pr
+    - debug:
+       var: pr
+      tags:
+         - proxy
+
+- hosts: mds
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the mds node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inven
+tory_hostname }} tail -10 /var/log/logstash-stdout.log
+      register: md
+    - debug:
+       var: md
+      tags:
+         - mds
+
+bash-4.2# vi permissions.yml
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inven
+tory_hostname }} tailtail sleep 20 tailtail tail -10 /var/log/logstash-stdout.log
+      register: rp
+    - debug:
+       var: rp
+      tags:
+         - replication
+
+- hosts: replicationAuditor
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the replicationauditor node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inven
+tory_hostname }} tailtail sleep 20 tailtail tail -10 /var/log/logstash-stdout.log
+      register: ra
+    - debug:
+       var: ra
+      tags:
+         - replicationauditor
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inven
+tory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: rp
+    - debug:
+       var: rp
+      tags:
+         - replication
+
+- hosts: replicationAuditor
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the replicationauditor node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inven
+tory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: ra
+    - debug:
+       var: ra
+      tags:
+         - replicationauditor
+"permissions.yml" 224L, 9278C written
+bash-4.2# cat permissions.yml
+---
+- hosts: proxy
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the proxy node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inventory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: pr
+    - debug:
+       var: pr
+      tags:
+         - proxy
+
+- hosts: mds
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the mds node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inventory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: md
+    - debug:
+       var: md
+      tags:
+         - mds
+
+- hosts: zookeeper
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the zookeeper node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inventory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: zk
+    - debug:
+       var: zk
+      tags:
+         - zookeeper
+
+- hosts: kafka
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the kafka node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inventory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: kf
+    - debug:
+       var: kf
+      tags:
+         - kafka
+
+- hosts: stats
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the stats node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inventory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: st
+    - debug:
+       var: st
+      tags:
+         - stats
+  # - file:
+  #     path: /u01/oss/stats/log/logstash
+  #     owner: 499
+  #     group: 499
+
+- hosts: gc
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the gc node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inventory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: gc
+    - debug:
+       var: gc
+      tags:
+         - gc
+
+- hosts: universe
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the universe node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inventory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: uv
+    - debug:
+       var: uv
+      tags:
+         - universe
+
+- hosts: admin
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the admin node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inventory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: ad
+    - debug:
+       var: ad
+      tags:
+         - admin
+
+- hosts: replication
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the replication node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inventory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: rp
+    - debug:
+       var: rp
+      tags:
+         - replication
+
+- hosts: replicationAuditor
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the replicationauditor node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inventory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: ra
+    - debug:
+       var: ra
+      tags:
+         - replicationauditor
+bash-4.2# clear
+TERM environment variable not set.
+bash-4.2# vi permissions.yml
+---
+- hosts: proxy
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the proxy node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inven
+tory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: pr
+    - debug:
+       var: pr
+      tags:
+         - proxy
+
+- hosts: mds
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the mds node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+bash-4.2# cat permissions.yml
+---
+- hosts: proxy
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the proxy node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inventory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: pr
+    - debug:
+       var: pr
+      tags:
+         - proxy
+
+- hosts: mds
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the mds node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inventory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: md
+    - debug:
+       var: md
+      tags:
+         - mds
+
+- hosts: zookeeper
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the zookeeper node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inventory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: zk
+    - debug:
+       var: zk
+      tags:
+         - zookeeper
+
+- hosts: kafka
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the kafka node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inventory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: kf
+    - debug:
+       var: kf
+      tags:
+         - kafka
+
+- hosts: stats
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the stats node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inventory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: st
+    - debug:
+       var: st
+      tags:
+         - stats
+  # - file:
+  #     path: /u01/oss/stats/log/logstash
+  #     owner: 499
+  #     group: 499
+
+- hosts: gc
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the gc node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inventory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: gc
+    - debug:
+       var: gc
+      tags:
+         - gc
+
+- hosts: universe
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the universe node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inventory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: uv
+    - debug:
+       var: uv
+      tags:
+         - universe
+
+- hosts: admin
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the admin node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inventory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: ad
+    - debug:
+       var: ad
+      tags:
+         - admin
+
+- hosts: replication
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the replication node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inventory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: rp
+    - debug:
+       var: rp
+      tags:
+         - replication
+
+- hosts: replicationAuditor
+  become: yes
+  become_method: sudo
+  become_user: root
+  gather_facts: true
+
+  tasks:
+    - name: changing the ownership permissions on the replicationauditor node
+      shell: docker exec -i {{ inventory_hostname }} chown -R logstash:logstash /var/log/logstash
+    - name: status of the logstash
+      #shell: docker exec -it `docker ps | grep proxy| awk {'print $20'}` service logstash restart
+      shell: docker exec -i {{ inventory_hostname }} service logstash status
+    - name: restarting  the logstash
+      shell: docker exec -i {{ inventory_hostname }} service logstash restart
+    - name: checking  the logstash status
+      shell: docker exec -i {{ inventory_hostname }} service logstash status && ls -ld /var/log/logstash && docker exec -i {{ inventory_hostname }} && sleep 30 && tail -10 /var/log/logstash-stdout.log
+      register: ra
+    - debug:
+       var: ra
+      tags:
+         - replicationauditor
